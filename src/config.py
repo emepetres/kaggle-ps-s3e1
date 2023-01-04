@@ -8,4 +8,6 @@ OUTPUTS = DATA_PATH + "/output"
 
 TARGET = "MedHouseVal"
 TRAINING_DATA = INPUTS + "/train.csv"
+TEST_DATA = INPUTS + "/test.csv"
+SUBMISSION_SAMPLE = INPUTS + "/sample_submission.csv"
 TRAINING_FOLDS = PREPROCESSED + "/train_folds.csv"

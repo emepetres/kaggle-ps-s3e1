@@ -1,5 +1,6 @@
 from typing import List
 import pandas as pd
+import numpy as np
 
 from sklearn import ensemble, linear_model, metrics
 import xgboost as xgb
@@ -19,12 +20,14 @@ class CustomModel:
         target: str,
         cat_features: List[str],
         ord_features: List[str],
+        test: pd.DataFrame = None,
     ):
         self.data = data
         self.fold = fold
         self.target = target
         self.cat_features = cat_features
         self.ord_features = ord_features
+        self.test = test
 
         self.features = cat_features + ord_features
 
@@ -45,6 +48,14 @@ class CustomModel:
         return metrics.mean_squared_error(
             self.df_valid[self.target].values, valid_preds, squared=False
         )
+
+    def predict_test(self) -> np.ndarray:
+        """Predicts on x_test data and score using RMSE"""
+
+        if self.test is None:
+            return 0
+
+        return self.model.predict(self.x_test)
 
 
 class LogisticRegressionModel(CustomModel):
@@ -68,8 +79,9 @@ class LogisticRegressionModel(CustomModel):
 
         self.x_train = dfx_train[encoded_features].values
         self.x_valid = dfx_valid[encoded_features].values
+        # TODO: self.x_test
 
-    def fit(self) -> pd.DataFrame:
+    def fit(self):
         self.model = linear_model.LogisticRegression()
 
         # fit model on training data
@@ -86,8 +98,10 @@ class DecisionTreeModel(CustomModel):
 
         self.x_train = self.df_train[self.features].values
         self.x_valid = self.df_valid[self.features].values
+        if self.test is not None:
+            self.x_test = self.test[self.features].values
 
-    def fit(self) -> pd.DataFrame:
+    def fit(self):
         self.model = ensemble.RandomForestRegressor(n_jobs=-1)
 
         # fit model on training data
@@ -101,10 +115,11 @@ class DecisionTreeModelSVD(DecisionTreeModel):
         self.x_train, self.x_valid = reduce_dimensions_svd(
             self.x_train, self.x_valid, 120
         )
+        # TODO: self.test
 
 
 class XGBoost(DecisionTreeModel):
-    def fit(self) -> pd.DataFrame:
+    def fit(self):
         self.model = xgb.XGBRegressor(
             n_jobs=-1, verbosity=0  # , max_depth=5  # , n_estimators=200
         )
@@ -126,6 +141,8 @@ class XGBoostEncoded(XGBoost):
 
         self.x_train = self.df_train[self.features].values
         self.x_valid = self.df_valid[self.features].values
+        if self.test is not None:
+            self.x_test = self.test[self.features].values
 
 
 class EmbeddingsModel(CustomModel):
