@@ -80,8 +80,6 @@ if __name__ == "__main__":
     df_sub[config.TARGET] = pred
 
     dt = datetime.now().strftime("%y%m%d.%H%M")
-    submission_file = (
-        Path(config.OUTPUTS) / f"{dt}-submission-{args.model}-{valid_rmse}.csv"
-    )
+    submission_file = Path(config.OUTPUTS) / f"{dt}-{args.model}-{valid_rmse}.csv"
     submission_file.parent.mkdir(exist_ok=True)
     df_sub.to_csv(submission_file, index=False)
