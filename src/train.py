@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 from pathlib import Path
 from typing import Tuple
 import pandas as pd
@@ -7,9 +8,7 @@ import numpy as np
 import config
 from model_dispatcher import (
     CustomModel,
-    LogisticRegressionModel,
     DecisionTreeModel,
-    DecisionTreeModelSVD,
     XGBoost,
 )
 
@@ -55,21 +54,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     model = None
-    if args.model == "lr":
-        model = LogisticRegressionModel
-    elif args.model == "rf":
+    if args.model == "rf":
         model = DecisionTreeModel
-    elif args.model == "svd":
-        model = DecisionTreeModelSVD
     elif args.model == "xgb":
         model = XGBoost
     else:
         raise argparse.ArgumentError(
-            "Only 'lr' (logistic regression)"
-            ", 'rf' (random forest)"
-            ", 'svd' (random forest with truncate svd)"
-            ", 'xgb' (XGBoost)"
-            " models are supported"
+            "Only 'rf' (random forest) and 'xgb' (XGBoost) models are supported"
         )
 
     validation_scores = []
@@ -88,6 +79,9 @@ if __name__ == "__main__":
     df_sub = pd.read_csv(config.SUBMISSION_SAMPLE)
     df_sub[config.TARGET] = pred
 
-    submission_file = Path(config.OUTPUTS) / f"submission-{args.model}-{valid_rmse}.csv"
+    dt = datetime.now().strftime("%y%m%d.%H%M")
+    submission_file = (
+        Path(config.OUTPUTS) / f"{dt}-submission-{args.model}-{valid_rmse}.csv"
+    )
     submission_file.parent.mkdir(exist_ok=True)
     df_sub.to_csv(submission_file, index=False)
