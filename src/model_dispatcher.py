@@ -4,6 +4,8 @@ import numpy as np
 
 from sklearn import ensemble, metrics
 import xgboost as xgb
+from lightgbm.sklearn import LGBMRegressor
+import lightgbm as lgbm
 
 from common.encoding import (
     encode_to_values,
@@ -84,3 +86,29 @@ class XGBoost(DecisionTreeModel):
 
         # fit model on training data
         self.model.fit(self.x_train, self.df_train.loc[:, self.target].values)
+
+
+class LightGBM(DecisionTreeModel):
+    def fit(self):
+        # taken from  https://www.kaggle.com/code/soupmonster/simple-lightgbm-baseline
+        params = {
+            "lambda_l1": 1.945,
+            "num_leaves": 87,
+            "feature_fraction": 0.79,
+            "bagging_fraction": 0.93,
+            "bagging_freq": 4,
+            "min_data_in_leaf": 103,
+            "max_depth": 17,
+        }
+
+        self.model = LGBMRegressor(
+            learning_rate=0.02, n_estimators=100_000, metric="rmse", **params
+        )
+
+        # fit model on training data
+        self.model.fit(
+            self.x_train,
+            self.df_train.loc[:, self.target].values,
+            eval_set=[(self.x_valid, self.df_valid[self.target].values)],
+            callbacks=[lgbm.early_stopping(85, verbose=True)],
+        )

@@ -4,7 +4,7 @@ Kaggle Playground Series 3, Episode 1 competition
 
 NOTES
 
-* XGBoost works much better than random forests.
+* The best model performing so far is LightGBM
 
 Tasks:
 
@@ -12,9 +12,11 @@ Tasks:
 * [x] Train & validation over decision tree and XGBoost
 * [x] Test & submission
 * [x] Stratified K-fold with bins
-* [ ] Combination of features
+* [x] Test using LightGBM
+* [ ] Test using catboost
 * [ ] Add original dataset + column indicating origin
 * [ ] Localization feature engenieering
+* [ ] Combination of features
 * [ ] PCA / y-sne /feature importance / trim of less important features
 * [ ] NN Tabular model
 * [ ] Hyperparameters tunning
