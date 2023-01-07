@@ -4,7 +4,8 @@ Kaggle Playground Series 3, Episode 1 competition
 
 NOTES
 
-* The best model performing so far is LightGBM
+* The best model performing so far is CatBoost
+* Adding the original dataset, with a new column indicating its origin, improves the performance by 0.045!
 
 Ideas to obtain the best model:
 
@@ -14,7 +15,7 @@ Ideas to obtain the best model:
 * [x] Stratified K-fold with bins
 * [x] Test using LightGBM
 * [x] Test using CatBoost
-* [ ] Add original dataset + column indicating origin
+* [x] Add original dataset + column indicating origin
 * [ ] Localization feature engenieering
 * [ ] Combination of features
 * [ ] PCA / y-sne /feature importance / trim of less important features
