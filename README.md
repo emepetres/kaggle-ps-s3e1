@@ -6,20 +6,21 @@ NOTES
 
 * The best model performing so far is LightGBM
 
-Tasks:
+Ideas to obtain the best model:
 
 * [x] K-fold
 * [x] Train & validation over decision tree and XGBoost
 * [x] Test & submission
 * [x] Stratified K-fold with bins
 * [x] Test using LightGBM
-* [ ] Test using catboost
+* [x] Test using CatBoost
 * [ ] Add original dataset + column indicating origin
 * [ ] Localization feature engenieering
 * [ ] Combination of features
 * [ ] PCA / y-sne /feature importance / trim of less important features
 * [ ] NN Tabular model
 * [ ] Hyperparameters tunning
+* [ ]  Try ensembles of different algoritms
 
 ## Train, validation & submission
 
@@ -27,7 +28,7 @@ Tasks:
 cd src
 conda activate ml
 python create_folds.py
-python -W ignore train.py [--model=xgb]  # [rf|xgb]
+python -W ignore train.py [--model=lgbm]  # [rf|xgb|lgbm|cb]
 ```
 
 Submission is stored in outputs folder (see `config.py` for complete path)

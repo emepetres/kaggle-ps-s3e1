@@ -6,6 +6,7 @@ from sklearn import ensemble, metrics
 import xgboost as xgb
 from lightgbm.sklearn import LGBMRegressor
 import lightgbm as lgbm
+from catboost import CatBoostRegressor
 
 from common.encoding import (
     encode_to_values,
@@ -111,4 +112,18 @@ class LightGBM(DecisionTreeModel):
             self.df_train.loc[:, self.target].values,
             eval_set=[(self.x_valid, self.df_valid[self.target].values)],
             callbacks=[lgbm.early_stopping(85, verbose=True)],
+        )
+
+
+class CatBoost(DecisionTreeModel):
+    def fit(self):
+        self.model = CatBoostRegressor(iterations=100_000, loss_function="RMSE")
+
+        # fit model on training data
+        self.model.fit(
+            self.x_train,
+            self.df_train.loc[:, self.target].values,
+            eval_set=[(self.x_valid, self.df_valid[self.target].values)],
+            early_stopping_rounds=1000,
+            verbose=False,
         )

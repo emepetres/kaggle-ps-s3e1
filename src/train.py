@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 import config
-from model_dispatcher import CustomModel, DecisionTreeModel, XGBoost, LightGBM
+from model_dispatcher import CustomModel, DecisionTreeModel, XGBoost, LightGBM, CatBoost
 
 
 def run(fold: int, model: CustomModel) -> Tuple[float, np.ndarray]:
@@ -56,11 +56,14 @@ if __name__ == "__main__":
         model = XGBoost
     elif args.model == "lgbm":
         model = LightGBM
+    elif args.model == "cb":
+        model = CatBoost
     else:
         raise argparse.ArgumentError(
             "Only 'rf' (random forest)"
-            ",'xgb' (XGBoost)"
-            "and 'lgbm (LightGBM)'"
+            ", 'xgb' (XGBoost)"
+            ", 'lgbm (LightGBM)'"
+            "and 'cb' (CatBoost)"
             " models are supported"
         )
 

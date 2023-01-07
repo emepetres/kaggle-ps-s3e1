@@ -17,6 +17,7 @@ dependencies:
   - kaggle=1.5.12
   - xgboost=1.5.1
   - lightgbm=3.3.4
+  - catboost=1.1.1
   - pytorch=1.12.1
   - torchvision=0.13.1
   - torchaudio=0.12.1
