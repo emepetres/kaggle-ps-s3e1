@@ -111,7 +111,7 @@ class LightGBM(DecisionTreeModel):
             self.x_train,
             self.df_train.loc[:, self.target].values,
             eval_set=[(self.x_valid, self.df_valid[self.target].values)],
-            callbacks=[lgbm.early_stopping(85, verbose=True)],
+            callbacks=[lgbm.early_stopping(85, verbose=False)],
         )
 
 
