@@ -11,8 +11,8 @@ from model_dispatcher import CustomModel, DecisionTreeModel, XGBoost, LightGBM, 
 
 def run(fold: int, model: CustomModel) -> Tuple[float, np.ndarray]:
     # load the full training data with folds
-    df = pd.read_csv(config.TRAINING_FOLDS)
-    df_test = pd.read_csv(config.TEST_DATA)
+    df = pd.read_csv(config.TRAIN_FOLDS)
+    df_test = pd.read_csv(config.PREPROCESSED_TEST_DATA)
     df_test["synthetic_data"] = 1
 
     # all columns are features except target, id and kfold columns
