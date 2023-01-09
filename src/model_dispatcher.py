@@ -93,6 +93,8 @@ class LightGBM(DecisionTreeModel):
     def fit(self):
         # taken from  https://www.kaggle.com/code/soupmonster/simple-lightgbm-baseline
         params = {
+            "learning_rate": 0.02,
+            "n_estimators": 100_000,
             "lambda_l1": 1.945,
             "num_leaves": 87,
             "feature_fraction": 0.79,
@@ -103,23 +105,40 @@ class LightGBM(DecisionTreeModel):
             "verbose": -100,
         }
 
-        self.model = LGBMRegressor(
-            learning_rate=0.02, n_estimators=100_000, metric="rmse", **params
-        )
+        # taken from https://www.kaggle.com/code/phongnguyen1/distance-to-key-locations#LightGBM
+        params = {
+            "n_estimators": 6058,
+            "num_leaves": 107,
+            "min_child_samples": 19,
+            "learning_rate": 0.004899729720251191,
+            # "log_max_bin": 10,
+            "colsample_bytree": 0.5094776453903889,
+            "reg_alpha": 0.007603254267129311,
+            "reg_lambda": 0.008134379186044243,
+        }
+
+        self.model = LGBMRegressor(metric="rmse", **params)
 
         # fit model on training data
         self.model.fit(
             self.x_train,
             self.df_train.loc[:, self.target].values,
             eval_set=[(self.x_valid, self.df_valid[self.target].values)],
-            callbacks=[lgbm.early_stopping(85, verbose=False)],
+            callbacks=[lgbm.early_stopping(100, verbose=False)],
             verbose=False,
         )
 
 
 class CatBoost(DecisionTreeModel):
     def fit(self):
-        self.model = CatBoostRegressor(iterations=100_000, loss_function="RMSE")
+        # https://www.kaggle.com/code/alexandershumilin/playground-series-s3-e1-catboost-xgboost-lgbm
+        params = {
+            "n_estimators": 15000,
+            "early_stopping_rounds": 1000,
+            "random_seed": 0,
+        }
+
+        self.model = CatBoostRegressor(loss_function="RMSE", **params)
 
         # fit model on training data
         self.model.fit(
