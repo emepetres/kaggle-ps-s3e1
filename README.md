@@ -36,7 +36,7 @@ Ideas to obtain the best model:
 cd src
 conda activate ml
 python create_folds.py
-python -W ignore train.py [--model=lgbm]  # [rf|xgb|lgbm|cb]
+python -W ignore train.py [--model=lgbm]  # [xgb|lgbm|cb]
 ```
 
 Submission is stored in outputs folder (see `config.py` for complete path)
