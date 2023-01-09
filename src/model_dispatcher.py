@@ -100,6 +100,7 @@ class LightGBM(DecisionTreeModel):
             "bagging_freq": 4,
             "min_data_in_leaf": 103,
             "max_depth": 17,
+            "verbose": -100,
         }
 
         self.model = LGBMRegressor(
@@ -112,6 +113,7 @@ class LightGBM(DecisionTreeModel):
             self.df_train.loc[:, self.target].values,
             eval_set=[(self.x_valid, self.df_valid[self.target].values)],
             callbacks=[lgbm.early_stopping(85, verbose=False)],
+            verbose=False,
         )
 
 

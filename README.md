@@ -12,16 +12,23 @@ Ideas to obtain the best model:
 * [x] K-fold
 * [x] Train & validation over decision tree and XGBoost
 * [x] Test & submission
-* [x] Stratified K-fold with bins
-* [x] Test using LightGBM
-* [x] Test using CatBoost
-* [x] Add original dataset + column indicating origin
+* [x] Stratified K-fold with bins -> Improvement
+* [x] Test using LightGBM -> Improvement
+* [x] Test using CatBoost -> Improvement
+* [x] Add original dataset + column indicating origin -> Huge improvement
 * [ ] Localization feature engenieering
+  * [x] postcode as numerical -> Tiny improvement
+  * [ ] postcode & other geo data as categorical
+  * [ ] use reverse geocoder
+  * [x] add distance to main cities and coast line -> improvement
+  * [x] add distance to cluster centroids -> improvement
+  * [x] add rotation features -> improvement
+* [ ] Split folds in 10 bins
 * [ ] Combination of features
 * [ ] PCA / y-sne /feature importance / trim of less important features
 * [ ] NN Tabular model
 * [ ] Hyperparameters tunning
-* [ ]  Try ensembles of different algoritms
+* [ ] Try ensembles of different algoritms
 
 ## Train, validation & submission
 
