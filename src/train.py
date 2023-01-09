@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     validation_scores = []
     preds = []
-    for fold_ in range(5):
+    for fold_ in range(10):
         score, predictions = run(fold_, model)
         validation_scores.append(score)
         preds.append(predictions)

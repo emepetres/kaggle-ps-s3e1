@@ -23,11 +23,11 @@ Ideas to obtain the best model:
   * [x] add distance to main cities and coast line -> improvement
   * [x] add distance to cluster centroids -> improvement
   * [x] add rotation features -> improvement
-* [ ] Split folds in 10 bins
+* [x] Split folds in 10 bins -> improvement
 * [ ] Combination of features
 * [ ] PCA / y-sne /feature importance / trim of less important features
 * [ ] NN Tabular model
-* [ ] Hyperparameters tunning
+* [x] Hyperparameters tunning -> improvement (copied from other notebooks)
 * [ ] Try ensembles of different algoritms
 
 ## Train, validation & submission

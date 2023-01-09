@@ -24,7 +24,7 @@ if __name__ == "__main__":
     df.loc[:, "bins"] = pd.cut(df[config.TARGET], bins=num_bins, labels=False)
 
     # initiate the kfold class from model_selection module
-    kf = model_selection.StratifiedKFold(n_splits=5)
+    kf = model_selection.StratifiedKFold(n_splits=10)
 
     # fill the new kfold column
     for f, (t_, v_) in enumerate(kf.split(X=df, y=df.bins.values)):
