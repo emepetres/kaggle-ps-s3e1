@@ -138,13 +138,16 @@ class CatBoost(DecisionTreeModel):
             "random_seed": 0,
         }
 
-        self.model = CatBoostRegressor(loss_function="RMSE", **params)
+        # # self.model = CatBoostRegressor(**params)
+        self.model = CatBoostRegressor(
+            iterations=100_000, loss_function="RMSE", random_seed=0
+        )
 
         # fit model on training data
         self.model.fit(
             self.x_train,
             self.df_train.loc[:, self.target].values,
             eval_set=[(self.x_valid, self.df_valid[self.target].values)],
-            early_stopping_rounds=1000,
-            verbose=False,
+            early_stopping_rounds=params["early_stopping_rounds"],
+            verbose=0,
         )

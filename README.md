@@ -4,8 +4,9 @@ Kaggle Playground Series 3, Episode 1 competition
 
 NOTES
 
-* The best model performing so far is CatBoost
+* The best model without tuning is catboost, but LightGBP performs better after tuning
 * Adding the original dataset, with a new column indicating its origin, improves the performance by 0.045!
+* Localization feat engineering is key, but not all features give improvements
 
 Ideas to obtain the best model:
 
